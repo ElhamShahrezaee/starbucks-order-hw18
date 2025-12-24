@@ -22,10 +22,9 @@ function App() {
   const hasItem = totalPrice > 0;
 
   return (
-    <div className="min-h-screen flex flex-col justify-between">
+    <div className="min-h-screen bg-[#ececec] flex flex-col justify-between">
       <Header />
 
-      {/* Products */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 px-6">
         {products.map((product) => (
           <ProductCard
@@ -34,6 +33,21 @@ function App() {
             quantity={cart[product.id] || 0}
             onIncrease={() => increase(product.id)}
             onDecrease={() => decrease(product.id)}
+            showButtons={true} // ردیف اول: دکمه‌ها نمایش داده میشن
+          />
+        ))}
+      </div>
+      <p className="my-3 text-center font-bold text-sm sm:text-base text-[#244b4d]">
+        Bill
+      </p>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 px-6">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id + "_qty"}
+            product={product}
+            quantity={cart[product.id] || 0}
+            showButtons={false} // ردیف دوم: فقط Qty
           />
         ))}
       </div>
@@ -41,15 +55,16 @@ function App() {
       {/* Footer */}
       <div className="bg-gray-100 mt-8 p-6 text-center">
         <p className="text-xl font-bold">Total: ${totalPrice.toFixed(2)}</p>
-
-        <button
-          disabled={!hasItem}
-          className={`mt-4 px-8 py-2 rounded text-white ${
-            hasItem ? "bg-orange-400" : "bg-gray-400 cursor-not-allowed"
-          }`}
-        >
-          Submit Order
-        </button>
+        <div className=" mt-4">
+          <button
+            disabled={!hasItem}
+            className={`w-full py-3 rounded text-white ${
+              hasItem ? "bg-orange-400" : "bg-gray-400 cursor-not-allowed"
+            }`}
+          >
+            Submit Order
+          </button>
+        </div>
       </div>
     </div>
   );
